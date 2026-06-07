@@ -11,7 +11,7 @@ const { nanoid } = require('nanoid');
 const db = require('./database');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'anamanamcayimbenim';
 
 cloudinary.config({
@@ -467,11 +467,15 @@ app.get('/api/settings', (req, res) => {
 });
 
 app.put('/api/admin/settings', requireAdmin, (req, res) => {
-  const allowed = ['accent_color', 'accent_color2', 'accent_color3', 'site_name'];
+  const allowed = [
+    'accent_color', 'accent_color2', 'accent_color3', 'site_name',
+    'oshi_bio', 'oshi_instagram', 'oshi_twitter', 'oshi_linkedin', 'oshi_website', 'oshi_github',
+    'team_bio', 'team_instagram', 'team_twitter', 'team_linkedin', 'team_website', 'team_github'
+  ];
   const ups = db.prepare('INSERT OR REPLACE INTO site_settings (key, value) VALUES (?, ?)');
   const update = db.transaction((data) => {
     Object.entries(data).forEach(([k, v]) => {
-      if (allowed.includes(k)) ups.run(k, v);
+      if (allowed.includes(k)) ups.run(k, String(v));
     });
   });
   update(req.body);
