@@ -15,6 +15,6 @@ COPY . .
 # Data klasörünü oluştur (Railway Volume mount noktası: /app/data)
 RUN mkdir -p /app/data
 
-EXPOSE 8080
+EXPOSE 3000
 
-CMD ["sh", "-c", "node migrate.js && node server.js"]
+CMD ["node", "server.js"]

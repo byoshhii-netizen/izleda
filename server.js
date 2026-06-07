@@ -8,10 +8,14 @@ const session = require('express-session');
 const SQLiteStore = require('connect-sqlite3')(session);
 const path = require('path');
 const { nanoid } = require('nanoid');
+
+// Migration'ı başlangıçta çalıştır
+try { require('./migrate'); } catch(e) { console.log('migrate skip:', e.message); }
+
 const db = require('./database');
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'anamanamcayimbenim';
 
 cloudinary.config({
