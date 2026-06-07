@@ -12,11 +12,8 @@ RUN npm install --production
 # Kaynak kodları kopyala
 COPY . .
 
-# Data klasörünü oluştur (volume mount noktası)
+# Data klasörünü oluştur (Railway Volume mount noktası: /app/data)
 RUN mkdir -p /app/data
-
-# Railway volume mount noktası: /app/data
-VOLUME ["/app/data"]
 
 EXPOSE 3000
 
